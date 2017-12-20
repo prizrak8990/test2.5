@@ -1,82 +1,76 @@
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
 int main()
 {
-    int n, i, j, k, l, t, z, b, v;
-    cout << "Enter 2D matrix size:" << endl;
-    cin >> k >> l;
-    int** a = new int*[k];
-    for (int count = 0; count < k; count++) {
-        a[count] = new int[l];
+    int n,i,j,a,b;
+
+    cout << "Enter 2D matrix size:"<< endl;
+    cin >> a >> b;
+    int **matrix = new int*[a];
+    for (i = 0; i < a; i++){
+        matrix[i] = new int [b];
     }
-    for (int row = 0; row < k; row++) {
-        for (int col = 0; col < l; col++) {
-            cin >> a[row][col];
+    for(i = 0; i < a; i++)
+    {
+        for(j = 0; j < b; j++)
+        {
+            cin >> matrix[i][j];
         }
     }
-
     cout << "Matrix complete, enter number:" << endl;
     cin >> n;
-    i = j = z = 0;
-    cout << "calculating..." << endl;
-    for (b = 0; b < k / 2; b++) {
-        for (t = 0; t < n; t++) {
-            for (v = 0; v < (k - z) * (k - z) - (k - z - 1) * (k - z - 1); v++) {
-                swap(a[z][z], a[i][j]);
-                if (i == z && j == l - 1 - z) {
-                    i++;
-                    continue;
-                }
-                else if (i == z) {
-                    j++;
-                    continue;
-                }
-
-                if (i == k - 1 - z && j == l - 1 - z) {
-                    j--;
-                    continue;
-                }
-                else if (j == l - 1 - z) {
-                    i++;
-                    continue;
-                }
-
-                if (i == k - 1 - z && j == z) {
-                    i--;
-                    continue;
-                }
-                else if (i == k - 1 - z) {
-                    j--;
-                    continue;
-                }
-
-                if (i == z + 1 && j == z) {
-                    if (t == n - 1 && z < k / 2) {
-                        z++;
-                        t = -1;
-                    }
-               continue;
-                }
-                else if (j == z) {
-                    i--;
-                    continue;
-                }
+    int t;
+    for(int z = 0; z < n; z++) {
+        i = j = t = 0;
+        for (int k = 0; k < a * b ; k++) {
+            swap(matrix[t][t], matrix[i][j]);
+            if (i == t && j != b - 1 - t) {
+                j++;
+                continue;
+            }
+            if (i == t && j == b - 1 - t) {
+                i++;
+                continue;
+            }
+            if (j == b - 1 - t && i != a - 1 - t) {
+                i++;
+                continue;
+            }
+            if (j == b - 1 - t && i == a - 1 - t) {
+                j--;
+                continue;
+            }
+            if (i == a - 1 - t && j != t) {
+                j--;
+                continue;
+            }
+            if (i == a - 1 - t && j == t) {
+                i--;
+                continue;
+            }
+            if (j == t && i != t + 1) {
+                i--;
+                continue;
+            }
+            if (j == t && i == t + 1) {
+                j++;
+                t++;
+                continue;
             }
         }
     }
 
-    for (i = 0; i < k; i++) {
-        for (j = 0; j < l; j++) {
-            cout << a[i][j] << " ";
-        }
+    for( i = 0 ; i < a ; i++ )
+    {
+        for( j=0; j < b ; j++)
+            cout << setw(5) <<matrix[i][j] ;
         cout << endl;
     }
+    for (i = 0; i < a; i++)
+        delete []matrix[i];
 
-    for (int count = 0; count < k; count++)
-        delete[] a[count];
-
-    cout << "end prog" << endl;
 
     return 0;
 }
